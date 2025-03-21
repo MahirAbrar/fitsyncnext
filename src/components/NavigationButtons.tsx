@@ -1,6 +1,8 @@
 "use client";
 import { motion } from "framer-motion";
 import { useState } from "react";
+// TODO HOOK UP LINK TO LOGIN PAGE
+import Link from "next/link";
 
 export default function NavigationButtons() {
   // TODO: SET LOG IN AUTH

@@ -1,15 +1,38 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(email, password);
-    // Handle login logic here
+    setError("");
+    setIsLoading(true);
+
+    try {
+      const result = await signIn("credentials", {
+        email,
+        password,
+        redirect: false,
+      });
+
+      if (result?.error) {
+        setError("Invalid email or password");
+      } else {
+        router.push("/dashboard"); // Redirect to dashboard after successful login
+      }
+    } catch (error) {
+      setError("An error occurred during login");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleGoogleLogin = async () => {
@@ -71,16 +94,20 @@ export default function LoginForm() {
         {/* Login Button */}
         <button
           type="submit"
-          disabled={!email || !password}
+          disabled={!email || !password || isLoading}
           className={`w-full py-3 rounded-lg font-semibold transition-colors ${
-            !email || !password
+            !email || !password || isLoading
               ? "bg-blue-400 cursor-not-allowed text-gray-200"
               : "bg-blue-600 hover:bg-blue-700 text-white"
           }`}
         >
-          Log In
+          {isLoading ? "Logging in..." : "Log In"}
         </button>
       </form>
+
+      {error && (
+        <div className="text-red-500 text-sm text-center mt-2">{error}</div>
+      )}
 
       {/* Divider */}
       <div className="relative my-6">

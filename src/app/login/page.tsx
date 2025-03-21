@@ -1,6 +1,8 @@
 import Image from "next/image";
 import LoginForm from "@/components/LoginForm";
 
+const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+
 export default function LoginPage() {
   return (
     <main className="min-h-screen bg-gradient-to-b from-blue-500 to-blue-700 px-4 py-8 flex flex-col items-center justify-center">
