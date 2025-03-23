@@ -72,6 +72,7 @@ const handler = NextAuth({
       // Add auth token to the JWT token right after sign in
       if (user) {
         token.accessToken = user.token;
+        console.log("JWT Token:", token);
       }
       return token;
     },

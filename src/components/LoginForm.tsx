@@ -26,7 +26,7 @@ export default function LoginForm() {
       if (result?.error) {
         setError("Invalid email or password");
       } else {
-        router.push("/dashboard"); // Redirect to dashboard after successful login
+        router.push("/"); // Redirect to home page after successful login
       }
     } catch (error) {
       setError("An error occurred during login");
